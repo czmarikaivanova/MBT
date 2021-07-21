@@ -4,7 +4,7 @@ Fast and efficient distribution of information gives rise to many optimization p
 Information dissemination processes studied in the mathematical and algorithmic literature \cite{fraigniaud94, harutyunyan13, hedetniemi88, hromkovic96}
 often fall into one of the categories \emph{gossiping} or \emph{broadcasting}.
 When all network nodes control each their unique piece of information, and all pieces are to be disseminated to all nodes,
-the process is called gossiping \cite{bermond98, bermond95}
+the process is called gossiping \cite{bermond98, bermond95}.
 % When all network nodes control each their unique piece of information, and all nodes need full access to the information, the required all-to-all dissemination is called gossiping.
 Dissemination of the information controlled by one particular source node to all network nodes is referred to as broadcasting \cite{mcgarvey16, ravi94},
 and multicasting \cite{barnoy00} if a subset of the network nodes are information targets.
@@ -32,7 +32,7 @@ the edge set of the graph consists of potential communication links along which 
 The time is divided into a finite number of steps.
 Agreeing with the whispering model, every informed node can, in each time step, forward the signal to at most one uninformed neighbor node.
 Therefore, the number of informed nodes can at most be doubled from one step to the next.
-This communication protocol appears in various practical application such as communication among computer processors or telephone networks.
+This communication protocol appears in various practical applications, such as communication among computer processors or telephone networks.
 In situations where the signals have to travel large distances, it is typically assumed that the signal is sent to one neighbor at the time.
 Inter-satellite communication networks thus constitute a prominent application area \cite{chu17}.
 Particularly, the MBT problem arises when one or a few satellites need to broadcast data quickly by means of time-division multiplexing.
@@ -52,13 +52,13 @@ The remainder of the paper is organized as follows:
 Next, we review the current scientific literature on MBT and related problems,
 and in Section \ref{sec:def}, a concise problem definition is provided.
 The integer program is formulated and discussed in Section \ref{sec:exact}.
-Lower and upper bounding methods are derived in Section \ref{sec:lb} and \ref{sec:ub}, respectively.
+Lower and upper bounding methods are derived in Sections \ref{sec:lb} and \ref{sec:ub}, respectively.
 Computational experiments are reported in Section \ref{sec:exp}, before the work is concluded by Section \ref{sec:conc}.
 
 \subsection{Literature overview} \label{sec:litrev}
 % To be extended such that adjacent territory, including gossiping, is explored.
 
-Deciding whether an instance of MBT has a solution with broadcast time at most $t$ has been shown to be NP-complete \cite{slater81}. 
+Deciding whether an instance of MBT has a solution with broadcast time at most $t$ has been shown to be NP-complete \cite{garey79,slater81}. 
 For bipartite planar graphs with maximum degree 3, NP-completeness persists even if $t=2$ or if there is only one source \cite{jansen95}.
 When $t=2$, the problem also remains NP-complete for cubic planar graphs \cite{middendorf93}, grid graphs with maximum degree 3,
 complete grid graphs, chordal graphs, and for split graphs \cite{jansen95}. 
@@ -72,26 +72,21 @@ introduces a dynamic programming algorithm that identifies all maximum matchings
 Additional contributions of \cite{scheuermann84} include heuristic approaches for near optimal broadcasting.
 Among more recent works, \cite{hasson04} describes a meta heuristic algorithm for MBT, and provides a comparison with other existing methods.
 The communication model is considered in an existing satellite navigation system in \cite{chu17}, where a greedy inexact method is proposed together with a mathematical programming model.
-Examples of additional efficient heuristics can be found e.g. in \cite{harutyunyan06,harutyunyan14,wang10}.
+Examples of additional efficient heuristics can be found e.g. in \cite{desousa18,harutyunyan06,harutyunyan14,wang10}.
 
-Considerable attention was devoted to finding approximation algorithms for MBT. 
-In \cite{kortsarz95}, the authors argue that methods presented in \cite{scheuermann84} provide no guarantee on the performance, 
-and show that wheel-graphs are examples of unfavourable instances.
+Approximation algorithms for MBT are studied in \cite{kortsarz95}. 
+The authors argue that methods presented in \cite{scheuermann84} provide no guarantee on the performance, and show that wheel-graphs are examples of unfavorable instances.
 Another contribution from \cite{kortsarz95} is an $\mathcal{O}(\sqrt{n})$-additive approximation algorithm for broadcasting in general graphs with $n$ nodes.
 The same work also provides approximation algorithms for several graph classes with small separators with approximation ratio proportional to the separator size times $\log n$.
-Authors of \cite{ravi94} improve the approximation result by presenting a 
-$\mathcal{O}\left(\frac{\log^2 n}{\log \log n}\right)$-approximation  algorithm, and thus remove the additive $\mathcal{O}(\sqrt{n})$ term.
-Subsequently, \cite{barnoy00} provides a $\mathcal{O}(\log n)$ approximation.
-This work also shows that it is NP-hard to approximate MBT of any graph within a factor of $3-\epsilon$.
-An algorithm with $\mathcal{O}\left(\frac{\log n}{\log \log n}\right)$-approximation ratio given in~\cite{elkin03} improves the result further.
+An algorithm with $\mathcal{O}\left(\frac{\log n}{\log \log n}\right)$-approximation ratio is given in~\cite{elkin03}.
+(Throughout the current text, the symbol $\log$ refers to the logarithm with base 2.)
 Most of the works cited above consider a single source.
-(Throughout the current text, the symbol $\log$ refers to the logarithm of base 2.)
 
 A related problem extensively studied in the literature is the minimum broadcast graph problem \cite{grigni91,mcgarvey16}. 
 A broadcast graph supports a broadcast from any node to all other nodes in optimal time $\lceil\log n\rceil$.
 For a given integer $n$, a variant of the problem is to find a broadcast graph of $n$ nodes such that the number of edges in the graph is minimized.
 In another variant, the maximum node degree rather than the edge cardinality is subject to minimization.
-MgGarvey et al.\ \cite{mcgarvey16} study integer linear programming (ILP) models for $c$-broadcast graphs, which is a generalization where signal transmission to at most $c$ neighbours is allowed in a single time step.
+McGarvey et al.\ \cite{mcgarvey16} study integer linear programming (ILP) models for $c$-broadcast graphs, which is a generalization where signal transmission to at most $c$ neighbours is allowed in a single time step.
 
 Despite a certain resemblance with MBT, the minimum broadcast graph problem is clearly distinguished from our problem,
 and will consequently not be considered further in the current work.
