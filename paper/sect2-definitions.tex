@@ -18,7 +18,7 @@ a sequence $V_0\subseteq\dots\subseteq V_t$ of node sets and a function $\pi:V\s
 Referring to Section \ref{intro}, the node set $V_k$ is the set of nodes that are informed in time step $k$.
 Initially, only the sources are informed ($V_0=S$), whereas all nodes are informed after $t$ time steps ($V_t=V$),
 and the set of informed nodes is monotonously non-decreasing ($V_{k-1}\subseteq V_k$ for $k=1,\ldots,t$).
-The parent function $\pi$ maps each node to the node from which it received the signal.
+The parent function $\pi$ maps each node to the node from which it receives the signal.
 Conditions \ref{def:edge}--\ref{def:parent} of Definition \ref{def:broadcasttime} thus reflect that the sender is a neighbor node in $G$,
 and that it is informed at an earlier time step than the recipient node.
 Because each node can send to at most one neighbor node in each time step,

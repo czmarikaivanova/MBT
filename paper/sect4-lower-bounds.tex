@@ -106,7 +106,7 @@ The proof is complete by observing that $t^{\ast}\leq\tau(G,S)$ follows from $\O
 
 \begin{remark} \label{rem:lpweak}
 To compute a lower bound on $\tau(G,S)$, Proposition \ref{prop:lpweak} suggests to solve a sequence of instances of the continuous relaxation of problem \eqref{mod:basic:dec:obj}--\eqref{mod:basic:dec:dim},
-and stop by the first value of $t=1,2,\ldots$ for which the optimal objective function value is $n-\sigma$.
+and stop by the first value $t^{\ast}$ of $t=1,2,\ldots$ for which the optimal objective function value is $n-\sigma$.
 Such an approach yields a lower bound ($t^{\ast}$) on $\tau(G,S)$,
 which is no weaker than the bound achieved by solving the continuous relaxation of \eqref{mod:basic:obj}--\eqref{mod:basic:dim}.
 \end{remark}
@@ -179,7 +179,7 @@ along with a simple adjustment ensuring that $\left|\bar{\pi}^{-1}(v_j)\right|\l
 Define $m=\max\left\{0,\left|\pi^{-1}(v_i)\right|-\left|\pi^{-1}(v_j)\right|\right\}$.
 Consider the case where $m>0$.
 Because $v_i$ has at most one child in each $V_k\setminus V_{k-1}$ ($k=p+1,\ldots,t$),
-there exist $p_1>\cdots>p_m>p$, and $u_r\in V_{p_r}\setminus V_{p_r-1}$ ($r=1,\ldots,m$) such that $\pi(u_r)=v_i$, whereas $v_j$ has no child in
+there exist integers $p_1>\cdots>p_m>p$, and nodes $u_r\in V_{p_r}\setminus V_{p_r-1}$ ($r=1,\ldots,m$) such that $\pi(u_r)=v_i$, whereas $v_j$ has no child in
 $\bigcup_{r=1}^m\left(V_{p_r}\setminus V_{p_r-1}\right)$.
 Let $U=\{u_1,\ldots,u_m\}$, and let $U=\emptyset$ if $m=0$.
 
@@ -195,10 +195,10 @@ Otherwise, $\left|\bar{\pi}^{-1}(v_i)\right|=\left|\pi^{-1}(v_j)\right|\leq\deg_
 and $\left|\bar{\pi}^{-1}(v_j)\right|=\left|\pi^{-1}(v_i)\right|\leq\left|\pi^{-1}(v_j)\right|\leq\deg_G(v_j)-1$.
 For $v_i\neq v\neq v_j$, $\left|\bar{\pi}^{-1}(v)\right|=\left|\pi^{-1}(v)\right|$,
 and thus $\left(\bar{V}_0,\ldots,\bar{V}_t,\bar{\pi}\right)$ satisfies condition \ref{def:degree}.
-It is straightforward to show that $\left(\bar{V}_0,\ldots,\bar{V}_t,\bar{\pi}\right)$ also satisfies condition \ref{def:parent}--\ref{def:unique}
+It is straightforward to show that $\left(\bar{V}_0,\ldots,\bar{V}_t,\bar{\pi}\right)$ also satisfies conditions \ref{def:parent}--\ref{def:unique}.
 \end{proof}
 
-Alg. \ref{alg:dreg} takes as input the number $\sigma$ of sources and the number $n$ of nodes, along with the vertex degrees $d_1,\ldots,d_n$,
+Algorithm \ref{alg:dreg} takes as input the number $\sigma$ of sources and the number $n$ of nodes, along with the vertex degrees $d_1,\ldots,d_n$,
 where $d_{\sigma+1}\geq\cdots\geq d_n$.
 It operates with a counter $\nu$ of informed nodes, initiated to $\sigma$.
 Thus, nodes $v_1,\ldots,v_{\nu}$ are informed, whereas $v_{\nu+1},\ldots,v_n$ are not.
@@ -223,7 +223,7 @@ $a_1\leftarrow\cdots\leftarrow a_n\leftarrow 0$, $\nu\leftarrow\sigma$ \\
 
 
 \begin{proposition}
-Alg.~\ref{alg:dreg} returns a lower bound on $\tau(G,S)$.
+Algorithm \ref{alg:dreg} returns a lower bound on $\tau(G,S)$.
 \label{cor:deg}
 \end{proposition}
 \begin{proof}
