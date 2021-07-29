@@ -3,16 +3,68 @@
 The aim of our experiments is to evaluate computational abilities of B\&B applied to the studied model, and determine its usability on different instance types.
 Also, we assess the strength of upper and lower bounding methods discussed above, as well as continuous relaxations of the models.
 
-In some of the experimental settings we use randomly generated instances.
-The generating procedure takes a number of nodes and a parameter $p$ as an input.
-First, it generates a random tree with the given number of nodes.
-It then iterates over all pairs of nodes that are not yet connected by an edge, and places an edge between them with the probability $p$.
+%In some of the experimental settings we use randomly generated instances referred to as random geometric graph (RGG).
+%The generating procedure takes a number of nodes and a parameter $p$ as an input.
+%First, it generates a random tree with the given number of nodes.
+%It then iterates over all pairs of nodes that are not yet connected by an edge, and places an edge between them with the probability $p$.
+In our experimental settings we consider. various types of instances, some of them are generated with randomness, 
+others are standard graph classes from the literature (e.g.,~\cite{graham93}) often used in cited works.
+The following paragraphs describe all of them. 
 
-Apart from randomly generated instances, we also evaluate data sets of various sizes and densities available online \cite{steinlib}.
-These existing collections of instances are used as benchmarks for algorithms for the minimum Steiner tree problem.
-We evaluate datasets named ``I160'', ``I320'' and ``I640'' with selected edge cardinalities stated in the tables with results.
-The only source node in these instances is always the node with id 1.
-In each instance category, 20 graphs are available.
+\paragraph{Geometric graph on unit square}
+A geometric graph is a graph with vertices embedded in an $n$-dimensional Euclidean space. 
+Two vertices are connected by an edge if the distance between them is smaller or equal to a given radius.
+The geometric graph instances, used in this paper, have vertices placed on the unite sphere. 
+These vertices, or points on the unit square, have been created by normalizing 3 random numbers drawn from a Gaussian distribution.
+Graph tool's~\cite{peixoto14} geometric graph has been used to add edges between vertices that are closer to each other than a Euclidean radius $r$.
+The final step is ensuring the graph is connected. 
+Initially, all vertices are marked as un-visited. 
+Starting at an arbitrary vertex removing itself from un-visited and adding the vertices connected to its edges to-be-visited. 
+Continue the process until the list of to-be-visited vertices are empty. 
+If there are more un-visited vertices a new edge is added between the last visited vertex and the first vertex in the un-visited array. 
+These edges are not subject to the radius constraint initially used. The process continues until all vertices are visited.  
+ The result is a graph where:
+ \begin{itemize}
+	 \item if the radius is large enough, a grid is formed across the unit sphere. This mimics a satellite network, where the edges represent line-of-sight.
+	 \item for medium sized radiuses, the arising graphs often contains local clusters simulating a network.
+	 \item with yet smaller distances the graph would be a spanning tree. 
+ \end{itemize}
+
+%Apart from randomly generated instances, we also evaluate data sets of various sizes and densities available online \cite{steinlib}.
+%These existing collections of instances are used as benchmarks for algorithms for the minimum Steiner tree problem.
+%We evaluate datasets named ``I160'', ``I320'' and ``I640'' with selected edge cardinalities stated in the tables with results.
+%The only source node in these instances is always the node with id 1.
+%In each instance category, 20 graphs are available.
+ \paragraph{Hypercube}
+ The hypercube graph $Q_n$ is the graph formed from the nodes and edges of a hypercube which is an $n$-dimensional generalization of a square ($n=2$) and cube ($n=3$).
+ Every hypercube graph $Q_n$ is a bipartite graph with $2^n$ nodes and $2^{n-1}n$ edges.
+
+ \paragraph{Cube-connected cycle}
+ When each node in a hypercube $Q_n$ is replaced by a cycle on $n$ nodes, we obtain a cube connected cycle of order $n$. 
+ If a nodes is indexed by a pair of numbers $(x,y)$, where $0\leq x< 2^n$ and $0\leq y < n$, each of the $n2^n$ nodes is connected to $n$ neighbors 
+ $(x, (y + 1) \mod n)$, $(x, (y - 1) \mod n)$, and $(x \oplus 2y, y)$, where $\oplus$ denotes the exclusive or operation on the two binary operands.
+
+ \paragraph{Harary graph}
+ The Harary graph $H_{k,n}$ is an example of a $k$-connected graph with $n$ nodes and the smallest possible number of edges.
+
+ \paragraph{Debruijn graph}
+Each vertex of an $n$-dimensional Debruijn graph represents a binary number of length $n$.
+There is an oriented edge $(b_1,b_2)$ if and only if $b_2 = b_1 << 1$ or $b_2 = b_1 << 1 + 1$.
+Note that we ignore the edge orientation and loops in order to obtain a valid MBT instance.
+This definition of Debuijn graphs on binary numbers is in fact a special case fitting our purposes. 
+Generally, the underlying set can be any set of $m$ symbols.
+
+ \paragraph{Shuffle exchange}
+Like in the case of Debruijn graph, vertices of a shuffle exchange graph represent binary string of length $n$. 
+ There is an edge between $b_1$ and $b_2$ if $b_2$ differs from $b_1$ in its last bit or if $b_2$ is obtained from $b_1$ by left or right cyclic shift.
+
+ \paragraph{Lattice}
+Lattice is a 4-connected grid graph of $m\times n$ vertices
+
+We consider instances with 1 or 2 sources. 
+Some of the instances are regular graphs, so the selection of a single source does not matter.
+One source is always the node with ID 0 except for lattices, where the ID is selected to correspond to instances in cited articles.
+In case of two sources, the second source has ID $\left\lfloor n/2 \right\rfloor$.
 
 \subsection{Comparison of upper and lower bounds}
 
@@ -33,7 +85,7 @@ There are however some instances where it does not hold, particularly for instan
 
 We further observe that the span of bounds decreases with increasing $p$, within one instance size, and also increases for a constant $p$ with increasing instance size.
 The experiments were not pursued for higher values of $p$, because it is very common that upper and lower bounds 'deg' and 'UB-4' coincide.
-This behavior is easy to explain.
+This behavior is easy to 
 There are more possibilities how to relay a signal in dense graphs as compared to sparser graphs. 
 It is therefore likely that denser graphs have optimal broadcast time close to the lower bounds.
 The decreasing span of bounds is also noticeable with increasing instance size.

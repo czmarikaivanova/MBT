@@ -1,28 +1,28 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "g++ build active file",
-        "type": "shell",
-        "command": "/usr/bin/g++",
-        "args": [
-          "-std=c++17",
-          "-g",
-          "-I${workspaceFolder}",
-          "${workspaceFolder}/*.cpp",
-          "-o",
-          "${workspaceFolder}/harutyunyan.exe"
-        ],
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "presentation": {
-          "reveal": "always"
-        },
-        "problemMatcher": [
-          "$gcc"
-        ]
-      }
-    ]
-  }
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "g++ build active file",
+      "type": "shell",
+      "command": "/usr/bin/g++",
+      "args": [
+        "-std=c++17",
+        "-g",
+        "-I${workspaceFolder}",
+        "${workspaceFolder}/*.cpp",
+        "-o",
+        "${workspaceFolder}/harutyunyan.exe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    }
+  ]
+}
