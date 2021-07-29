@@ -47,21 +47,21 @@ By \eqref{mod:basic:singlein}, every non-source node $u$ receives the signal fro
 The requirement that a non-source node $u$ informs a neighbor $v$ in the $k$-th time step only if $u$ is informed by some adjacent node $w$ in an earlier time step is modeled by \eqref{mod:basic:tIncreases}. 
 %Constraints \eqref{mod:basic:uniqueTout} enforce that for each node $u\in V$ and each subset $V_k$, there is at most one adjacent node $v\in V_k$ with $\pi(v)=u$.
 Constraints \eqref{mod:basic:tcrel} enforce that each node $u\in V$ forwards the signal to at most one adjacent node $v$ in each time step.
-It also sets correct values to the $z$-variable that appear in the objective function.
+It also sets correct values to the $z$-variables that appear in the objective function.
 %The requirement that only informed nodes can relay a signal is modeled by \eqref{mod:basic:tIncreases}. 
 %The maximum time step at which any transmission takes place is captured by \eqref{mod:basic:tcrel}, and finally, \eqref{mod:basic:positiveCost} states that a node that is not a source never transmits in the first time step.
 %The length of the sequence of subsets is captured by \eqref{mod:basic:tcrel}, and finally, \eqref{mod:basic:positiveCost} state that if $\pi(v)\not\in S$ for some $j\in V$, then $v\not\in V_1$.
-The valid inequalities \ref{mod:basic:timing} reflect that $k\leq\tau(G,S)$ only if $k-1\leq\tau(G,S)$.
+The (redundant) valid inequalities \eqref{mod:basic:timing} reflect that $k\leq\tau(G,S)$ only if $k-1\leq\tau(G,S)$.
 Lastly, constraints \eqref{mod:basic:positiveCost} and \eqref{mod:basic:dec:0toSource} state, respectively, that non-source nodes do not transmit in the first time step,
 and that sources never receive the signal.
 
 \subsubsection{Decision version}
 \label{sec:decbasic}
-The nature of MBT suggests another modelling approach derived from Model \eqref{mod:basic}. 
+The nature of MBT suggests another modelling approach derived from model \eqref{mod:basic}. 
 For a given positive integer $t$, we maximize the number of nodes $v$ that receive a signal from some neighbor $u$ within $t$ time steps.
 Hence, $\tau(G,S)$ is the smallest value of $t$ for which the maximum attains the value $n-\sigma$.
-If the optimal objective function value is $n-\sigma$, the corresponding values of the decision variable induce a broadcast forest with broadcast time $t$.
-Otherwise, if the optimal objective function value is smaller than $n-\sigma$, $t<\tau(G,S)$, and Model \eqref{mod:basic:dec} is solved again with $t$ replaced by $t+1$.
+If the optimal objective function value is $n-\sigma$, the corresponding value of $x$ induces a broadcast forest with broadcast time $t$.
+Otherwise, if the optimal objective function value is smaller than $n-\sigma$, $t<\tau(G,S)$, and model \eqref{mod:basic:dec} is solved again with $t$ replaced by $t+1$.
 The computational efficiency of a search where $t$ is increased from some lower bound on $\tau(G,S)$ is largely dependent of the tightness of available upper and lower bounds on $\tau(G,S)$.
 If an upper bound $\bar{t}\geq \tau(G,S)$ is known, and it is revealed that for $t=\bar{t}-1$ fewer than $n-\sigma$ can receive the signal in time $t$, it is concluded that $\tau(G,S)=\bar{t}$.
 
@@ -70,6 +70,7 @@ The decision version of a model for \textsc{Minimum Broadcast Time} takes the fo
 \begin{align}
 \label{mod:basic:dec:obj} \max \sum\limits_{v \in V\setminus S}\sum\limits_{u \in N(v)} \sum\limits_{k=1}^{t}x_{uv}^k \\ 
 \text{s. t.~~~} \label{mod:basic:dec:atMost1in} \sum\limits_{k=1}^{t}\sum\limits_{v\in N(u)}x_{vu}^k  \leq 1 && u\in V \setminus S,\\
+\label{mod:basic:dec:tcrel} \sum\limits_{v\in N(u)}x_{uv}^k  \leq 1 &&  u\in S,k=1,\dots,t,\\
 \eqref{mod:basic:tIncreases},  \eqref{mod:basic:positiveCost}, \eqref{mod:basic:dec:0toSource}, \\
 \label{mod:basic:dec:dim}x \in \{0,1\}^{\overrightarrow{E}\times \{1,\dots,t\}}.&&
 \end{align}~
@@ -77,4 +78,5 @@ The decision version of a model for \textsc{Minimum Broadcast Time} takes the fo
 
 In the transition from the optimization model \eqref{mod:basic}, constraint \eqref{mod:basic:singlein} is replaced by \eqref{mod:basic:dec:atMost1in}.
 The former is an inequality in the decision version, because not all nodes are necessarily reached within the given time limit.
+To pursue the constraint that sources inform at most one neighbor node in each period, \eqref{mod:basic:tcrel} is replaced by \eqref{mod:basic:dec:tcrel}.
 
