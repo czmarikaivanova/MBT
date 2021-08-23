@@ -40,6 +40,13 @@ These edges are not subject to the radius constraint initially used. The process
  \paragraph{Hypercube}
  The hypercube graph $Q_n$ is the graph formed from the nodes and edges of a hypercube which is an $n$-dimensional generalization of a square ($n=2$) and cube ($n=3$).
  Every hypercube graph $Q_n$ is a bipartite graph with $2^n$ nodes and $2^{n-1}n$ edges.
+ Note that Alg.~\ref{alg:match} for $k=1$ solves $Q_2$ and $Q_3$ optimally, but it is not guaranteed for $k\geq 4$, as seen in Fig.~\ref{fig:hccounterex}.
+
+\begin{figure}%[htbp]
+	\centerline{\includegraphics[scale=.7]{matching-counterex}}
+\caption{UB-1 does not find an optimal solution for $Q_4$. }
+\label{fig:hccounterex}
+\end{figure}
 
  \paragraph{Cube-connected cycle}
  When each node in a hypercube $Q_n$ is replaced by a cycle on $n$ nodes, we obtain a cube connected cycle of order $n$. 
