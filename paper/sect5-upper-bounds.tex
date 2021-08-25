@@ -45,26 +45,61 @@ The maximization problem in question is exactly the one addressed by model \eqre
 where $V_{t'}$ is considered as sources, $k$ the upper bound on the broadcast time, and the graph is $G$ with all edges within $V_{t'}$ removed.
 Choosing $k=1$ corresponds to the maximum matching option, whereas large values of $k$ (e.g., $k=n-\sigma$) makes Alg.\ \ref{alg:match} an exact method. 
 
+%\begin{algorithm}[]
+%	\KwData{$G=(V,E), S\subseteq V, k\in \{1,\dots,n-\sigma\}$}
+%\For{$t'=0,1,\dots$} {
+%	\textbf{if} ~$S=V$ ~\textbf{return} $t'$ \\
+%	$x\leftarrow$ optimal solution to the instance of model \eqref{mod:basic:dec} with $t=k$ \\
+%	\For{$\{u,v\}\in E$ such that $u\in S$, $v\in V\setminus S$, and $x_{uv}^1=1$} {
+%		$S\leftarrow S\cup\{v\}$
+%	}
+%}
+%\caption{Construction of near-optimal solutions through sequences of matchings}
+%\label{alg:match}
+%\end{algorithm}
+
 \begin{algorithm}[]
 	\KwData{$G=(V,E), S\subseteq V, k\in \{1,\dots,n-\sigma\}$}
-\For{$t'=0,1,\dots$} {
-	\textbf{if} ~$S=V$ ~\textbf{return} $t'$ \\
+	$F\leftarrow\emptyset$\\
+	$S'\leftarrow S$\\
+%\For{$t'=0,1,\dots$} {
+\While{$S'\neq V$} {
 	$x\leftarrow$ optimal solution to the instance of model \eqref{mod:basic:dec} with $t=k$ \\
-	\For{$\{u,v\}\in E$ such that $u\in S$, $v\in V\setminus S$, and $x_{uv}^1=1$} {
-		$S\leftarrow S\cup\{v\}$
+	\For{$\{u,v\}\in E$ such that $u\in S'$, $v\in V\setminus S'$, and $x_{uv}^1=1$} {
+		$S'\leftarrow S'\cup\{v\}$\\
+		$F\leftarrow F\cup\{u,v\}$\\
 	}
 }
+	\textbf{return} $\tau((V,F),S)$ \\
 \caption{Construction of near-optimal solutions through sequences of matchings}
 \label{alg:match}
 \end{algorithm}
 
-In many instances, there are multiple options for selecting an optimal solution $x$ (line 3).
-Two different sequences of solutions generated during the course of Alg.~\ref{alg:match} may result in different broadcast times.
-Let us take a hypercube $C_j$ as an example which has $\tau(C_j,S)=j$ for $\sigma=1$ regardless of selection of the source node.
-Alg.~\ref{alg:match} with $k=1$ always finds $\tau(C_j,S)$ for $j=1\dots 3$. 
-It also finds the optimum for $j\geq 4$ 
-provided that the subgraph induced by the current $S$ at the beginning of each iteration $t'$ forms a hypercube $C_{t'}$.
-If this tie-breaking rule is violated, the algorithm may fail to find the optimum as demonstrated in $C_4$ (TODO: image or description in the text?)
+The algorithm generates a broadcast forest $(V,F)$ with source set $S$ consisting of trees, each with a single source (root). The broadcast time of such a tree can be determined recursively in polynomial time by the following Alg.~\ref{alg:treembt}.
+
+\begin{algorithm}
+\SetKwFunction{printlcs}{\textsc{Tree}-MBT}
+	\Indm\nonl\printlcs{$T,s$}\\
+\Indp
+  $L\leftarrow \text{empty list}$\\
+	\For {$v:\{s,v\}\in F, s\in S$} {
+		$X\leftarrow\text{subtree of }(V,F) \text{ rooted at } v$\\
+		$\tau\leftarrow$\printlcs{$X,v$}\\
+		$\text{insert } \tau \text{ in } L \text{ such that } L \text{ remains a non-decrasing list of integers}$
+
+		}
+
+		\If{$L \text{ is empty}$}{\KwRet{0}}
+		\KwRet{$\max\{k+L[k]:k=1,\dots,|L|\}$}
+\caption{Polynomial procedure for finding broadcast time on trees}
+\label{alg:treembt}
+
+\end{algorithm}
+
+The broadcast time $\tau((V,F),S)$ of the forest is then the maximum of broadcast times of these trees in $((V,F),S)$.
+
+In many instances, there are multiple options for selecting an optimal solution $x$ (line 4).
+Two different sequences of solutions generated during the course of Alg.~\ref{alg:match} may result in different broadcast times, as can be illustrated on the example of a hypercube~\ref{sect:hc}.
 
 Intuitively, the broadcast time found by Alg.~\ref{alg:match} is likely to be closer to the optimum for larger $k$.
 This intuition is also confirmed by a vast majority of instances in the experimental section.
@@ -75,7 +110,7 @@ One of the leafs of $B_2$ is an endpoint of a path of length 3.
 The second neighbor $n_2$ of $s$ is adjacent to a root of binomial tree $B_3$.
 Alg.~\ref{alg:match} with $k=3$ decides that $n_1\in V_1$, $n_2\in V_2$ and eventually finds $\tau{T,\left\{s\right\}}$.
 With $k=5$, $n_1\in V_2$, $n_2\in V_1$, which results in a suboptimal solution.
-(TODO: is such an example useful? Should there be an illustration?)
+(TODO: This is no longer true for the improved Alg. 2. But let's wait for the experiments to see if there are other instances with such property.)
 
 
 \begin{remark} \label{rem:time}

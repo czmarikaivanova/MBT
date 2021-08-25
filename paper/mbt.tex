@@ -18,8 +18,12 @@
 \usepackage{enumitem}
 \usepackage{mathtools}
 \usepackage{color}
+% algorithm package settings
 \usepackage[linesnumbered]{algorithm2e}
 \SetKwRepeat{Do}{do}{while}
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand\nonl{%
+  \renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
 
 \captionsetup{compatibility=false}
 

@@ -37,10 +37,21 @@ These edges are not subject to the radius constraint initially used. The process
 %We evaluate datasets named ``I160'', ``I320'' and ``I640'' with selected edge cardinalities stated in the tables with results.
 %The only source node in these instances is always the node with id 1.
 %In each instance category, 20 graphs are available.
- \paragraph{Hypercube}
+ \paragraph{Hypercube}\label{sect:hc}
  The hypercube graph $Q_n$ is the graph formed from the nodes and edges of a hypercube which is an $n$-dimensional generalization of a square ($n=2$) and cube ($n=3$).
  Every hypercube graph $Q_n$ is a bipartite graph with $2^n$ nodes and $2^{n-1}n$ edges.
- Note that Alg.~\ref{alg:match} for $k=1$ solves $Q_2$ and $Q_3$ optimally, but it is not guaranteed for $k\geq 4$, as seen in Fig.~\ref{fig:hccounterex}.
+ %Note that Alg.~\ref{alg:match} for $k=1$ solves $Q_2$ and $Q_3$ optimally, but it is not guaranteed for $k\geq 4$, as seen in Fig.~\ref{fig:hccounterex}.
+
+A hypercube $C_j$ has $\tau(C_j,S)=j$ for $\sigma=1$ regardless of selection of the source node.
+Note that Alg.~\ref{alg:match} with $k=1$ always finds $\tau(C_j,S)$ for $j=1\dots 3$. 
+It also finds the optimum for $j\geq 4$ 
+provided that the subgraph induced by the current $S$ at the beginning of each iteration $t'$ forms a hypercube $C_{t'}$.
+If this tie-breaking rule is violated, the algorithm may fail to find the optimum as demonstrated on $C_4$ in Fig.~\ref{fig:hccounterex}.
+The depicted hypercube has a single source a $A$.
+The nodes are informed as highlighted by blue arrows, where the number along each arrow indicated the time step in which the transmission takes place.
+At time step 3, we have 8 informed nodes, and in the next time step, all remaining nodes except $G'$ will become informed. 
+Thus, Alg.~\ref{alg:match} finds a suboptimal solution 5.
+If in time step 3 $A$ informed $D$ and $C$ informed $G$, all nodes woulb be informed within 4 steps.
 
 \begin{figure}%[htbp]
 	\centerline{\includegraphics[scale=.7]{matching-counterex}}
